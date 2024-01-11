@@ -5,7 +5,7 @@ const hostname = 'localhost';
 const port = 3306;
 const database_name = 'dbdzama';
 const username = 'root';
-const password = 'root';
+const password = '';
 
 const sequelize = new Sequelize(
     database_name, 
