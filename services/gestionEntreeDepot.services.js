@@ -8,6 +8,7 @@ const getNombreEntree = async (debut = null, fin = null) => {
         const conditions = {};
         const dateDebut = debut ? moment(debut).toDate() : null;
         const dateFin = fin ? moment(fin).toDate() : null;
+
         console.log(dateDebut, dateFin)
         if (dateDebut && dateFin) {
           conditions.date_entree = {
@@ -37,7 +38,7 @@ const getNombreEntree = async (debut = null, fin = null) => {
 
 const getNombreEntreeDuJour = async () => {
     try {
-        const debut = new Date();
+        const debut = new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Nairobi' });
         // Réglage de l'heure à minuit
         debut.setHours(0, 0, 0, 0);
         const nombre = await getNombreEntree(debut);
@@ -47,18 +48,21 @@ const getNombreEntreeDuJour = async () => {
     }
 }
 
-const insererEntree = async (date_entree = new Date(), facture_entree, idReponsable) => {
+const insererEntree = async (date_entree = new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Nairobi' }), facture_entree, idReponsable) => {
     try {
         const entreeDepot = await EntreeDepot.create({
 			date_entree,
 			facture_entree,
 			id_user: idReponsable,
         });
+
     
         return entreeDepot;
       } catch (error) {
         console.error('Erreur lors de l\'insertion de l\'entreeDepot :', error);
         throw error;
+      }finally{
+        console.log(date_entree)
       }
 }
 
@@ -68,6 +72,7 @@ const getAll = async (debut = null, fin = null, sortList = 'date_desc', page = n
     
         const dateDebut = debut ? moment(debut).toDate() : null;
         const dateFin = fin ? moment(fin).toDate() : null;
+
     
         // Ajouter les conditions de date si début et/ou fin sont spécifiés
         if (dateDebut && dateFin) {
@@ -99,6 +104,8 @@ const getAll = async (debut = null, fin = null, sortList = 'date_desc', page = n
             offset,
             limit,
         });
+
+        
     
         return { rows, count };
     } catch (error) {

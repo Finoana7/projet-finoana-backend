@@ -35,7 +35,7 @@ const addTransport = async (id_sortie, id_transport) => {
 
 const addTraceSecurite = async (id_sortie, id_portail) => {
     try {
-        const current_date = new Date();
+        const current_date = new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Nairobi' });
         const inserted = await ConfirmationSecurite.create({
             numero_sortie: id_sortie,
             numero_portail: id_portail,
@@ -246,7 +246,7 @@ const getNombreSortie = async (debut = null, fin = null) => {
 
 const getNombreSortieDuJour = async () => {
     try {
-        const debut = new Date();
+        const debut = new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Nairobi' });
         // Réglage de l'heure à minuit
         debut.setHours(0, 0, 0, 0);
         const nombre = await getNombreSortie(debut);
